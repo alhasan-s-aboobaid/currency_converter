@@ -1,5 +1,9 @@
+import 'package:currency_converter/core/util/constants.dart';
+import 'package:currency_converter/features/converter/presentation/bloc/bloc.dart';
+import 'package:currency_converter/features/converter/presentation/pages/currency_conversion_page.dart';
 import 'package:currency_converter/features/home/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/home/presentation/pages/home_page.dart';
+import 'package:currency_converter/features/home/presentation/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'injection.dart' as di;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +23,69 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => di.inj<SupportedCurrenciesBloc>()),
+        BlocProvider(create: (_) => di.inj<CurrencyConversionBloc>()),
       ],
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.green),
-        home: HomePage(),
+        home: MainPage(),
+      ),
+    );
+  }
+}
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar(),
+      body: Container(
+        padding: kPagePadding,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return HomePage();
+                },));
+              },
+              child: Container(
+                height: 56,
+                padding: kContentPadding,
+                decoration: const BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+
+                child: Center(child: Text("Supported Currencies", style: Theme.of(context).textTheme.headline5,)),
+              ),
+            ),
+            SizedBox(height: 12),
+            GestureDetector(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                  return CurrencyConversionPage();
+                },));
+              },
+              child: Container(
+                height: 56,
+                padding: kContentPadding,
+                decoration: const BoxDecoration(
+                  color: Colors.deepOrange,
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+
+                child: Center(child: Text("Currencies Conversion", style: Theme.of(context).textTheme.headline5,)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

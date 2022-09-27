@@ -16,6 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, (){
+      BlocProvider.of<SupportedCurrenciesBloc>(context).add(GetSupportedCurrenciesEvent());
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
@@ -24,15 +32,15 @@ class _HomePageState extends State<HomePage> {
         child: BlocBuilder<SupportedCurrenciesBloc, SupportedCurrenciesState>(
             builder: (context, state) {
           if(state is Loading) {
-            return const CircularProgressIndicator(backgroundColor: Colors.red,);
+            return const Center(child: CircularProgressIndicator());
           }
           if(state is Loaded) {
             return MainContent(supportedCodes: state.supportedCurrencies.supportedCodes,);
           }
           if(state is Error) {
-            return Text(state.message);
+            return Text(state.message, style: Theme.of(context).textTheme.bodyText2,);
           }
-          return GestureDetector(
+          return Container(); /*GestureDetector(
             child: Container(padding: EdgeInsets.all(8),
             width: 150,
             height: 56,
@@ -42,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             onTap: (){
               BlocProvider.of<SupportedCurrenciesBloc>(context).add(GetSupportedCurrenciesEvent());
             },
-          );
+          )*/;
 
         }),
       ),
