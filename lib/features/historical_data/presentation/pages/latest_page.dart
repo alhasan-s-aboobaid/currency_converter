@@ -15,7 +15,19 @@ class LatestConversionsPage extends StatefulWidget {
   State<LatestConversionsPage> createState() => _LatestConversionsPageState();
 }
 
+
+
 class _LatestConversionsPageState extends State<LatestConversionsPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, (){
+      BlocProvider.of<LatestConversionsBloc>(context).add(GetLatestConversionsEvent(currency: widget.currency));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

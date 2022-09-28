@@ -1,3 +1,4 @@
+import 'package:currency_converter/core/routing/routes.dart';
 import 'package:currency_converter/core/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -24,7 +25,7 @@ class _SupportedCurrenciesWidgetState extends State<SupportedCurrenciesWidget> {
         itemBuilder: (ctx, index) {
           return GestureDetector(
             onTap: (){
-              Navigator.pushNamed(context, 'latest', arguments: {
+              Navigator.pushNamed(context, AppRoutes.latest, arguments: {
                 'currency': widget.supportedCodes[index][0]
               });
             },

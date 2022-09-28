@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:currency_converter/core/error/failures.dart';
+import 'package:currency_converter/features/historical_data/data/models/latest_data_model.dart';
 import '../../domain/entities/latest_data.dart';
 import '../bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -9,21 +10,27 @@ const String SERVER_FAILURE_MESSAGE = 'Server Failure';
 const String CACHE_FAILURE_MESSAGE = 'Failed to load from database';
 
 class LatestConversionsBloc extends Bloc<LatestConversionsEvent, LatestConversionsState> {
-
   final GetLatestConversions getLatestConversions;
 
   LatestConversionsBloc({required this.getLatestConversions}) : super(Initial()) {
     on<LatestConversionsEvent>((event, emit) async {
-      if(event is GetLatestConversionsEvent) {
+      if (event is GetLatestConversionsEvent) {
         emit(Loading());
-        final response = await getLatestConversions(event.currency);
+        final response = await getLatestConversions(
+            event.currency,
+            LatestDataModel(
+                baseCode: event.currency,
+                timeNextUpdateUtc: "",
+                timeNextUpdateUnix: 0,
+                conversionRates: {},
+                timeLastUpdateUnix: 0,
+                timeLastUpdateUtc: ""));
         emit(_eitherLoadedOrErrorState(response));
       }
     });
   }
 
-@override
-
+  @override
   void onTransition(Transition<LatestConversionsEvent, LatestConversionsState> transition) {
     // TODO: implement onTransition
     super.onTransition(transition);
@@ -31,15 +38,13 @@ class LatestConversionsBloc extends Bloc<LatestConversionsEvent, LatestConversio
   }
 
   LatestConversionsState _eitherLoadedOrErrorState(
-      Either<Failure, LatestData> failureOrlatest,
-      ) {
+    Either<Failure, LatestData> failureOrlatest,
+  ) {
     return failureOrlatest.fold(
-          (failure) => Error(message: _mapFailureToMessage(failure)),
-          (latest) => Loaded(latestData: latest),
+      (failure) => Error(message: _mapFailureToMessage(failure)),
+      (latest) => Loaded(latestData: latest),
     );
   }
-
-
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
@@ -51,5 +56,4 @@ class LatestConversionsBloc extends Bloc<LatestConversionsEvent, LatestConversio
         return 'Unexpected error';
     }
   }
-
 }

@@ -3,6 +3,12 @@ import 'package:currency_converter/features/converter/data/datasource/convert_be
 import 'package:currency_converter/features/converter/domain/repositories/currency_conversion_repositories.dart';
 import 'package:currency_converter/features/converter/domain/usecases/convert_currencies.dart';
 import 'package:currency_converter/features/converter/presentation/bloc/convert_currencies_bloc.dart';
+import 'package:currency_converter/features/historical_data/data/datasource/get_local_latest_conversions.dart';
+import 'package:currency_converter/features/historical_data/data/datasource/get_remote_latest_data.dart';
+import 'package:currency_converter/features/historical_data/data/repositories/latest_conversions_repository_impl.dart';
+import 'package:currency_converter/features/historical_data/domain/repository/latest_conversions_repositories.dart';
+import 'package:currency_converter/features/historical_data/domain/usecases/get_supported_currencies.dart';
+import 'package:currency_converter/features/historical_data/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/home/data/datasources/get_local_supported_currencies.dart';
 
 import 'package:currency_converter/features/home/data/datasources/get_remote_supported_currencies.dart';
@@ -23,16 +29,22 @@ Future<void> init() async {
 
   inj.registerFactory(() => SupportedCurrenciesBloc(getSupportedCurrencies: inj()));
   inj.registerFactory(() => CurrencyConversionBloc(convertCurrencies: inj()));
+  inj.registerFactory(() => LatestConversionsBloc(getLatestConversions: inj()));
 
   // Usecases
   inj.registerLazySingleton(() => GetSupportedCurrencies(inj()));
   inj.registerLazySingleton(() => ConvertCurrencies(inj()));
+  inj.registerLazySingleton(() => GetLatestConversions(inj()));
 
   // Repository
   inj.registerLazySingleton<SupportedCurrenciesRepository>(() => SupportedCurrenciesRepositoryImpl(
       networkState: inj(), localDataSource: inj(), supportedCurrenciesRemoteDataSource: inj()));
 
   inj.registerLazySingleton<CurrenciesConversionRepository>(() => CurrencyConversionRepositoryImpl(
+      networkState: inj(), remoteDataSource: inj()));
+
+  inj.registerLazySingleton<LatestConversionsRepository>(() => LatestConversionsRepositoryImpl(
+    localDataSource: inj(),
       networkState: inj(), remoteDataSource: inj()));
 
   // Data sources
@@ -47,6 +59,12 @@ Future<void> init() async {
     () => SupportedCurrenciesLocalDataSourceImpl(),
   );
 
+  inj.registerLazySingleton<LatestCurrencyConversionsLocalDataSource>(
+        () => LatestCurrencyConversionsLocalDataSourceImpl(),
+  );
+  inj.registerLazySingleton<LastConversionsRemoteDataSource>(
+        () => LastConversionsRemoteDataSourceImpl(client: inj()),
+  );
 
   // core
   inj.registerLazySingleton<NetworkState>(() => NetworkStateImpl(inj()));

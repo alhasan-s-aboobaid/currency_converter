@@ -2,6 +2,7 @@ import 'package:currency_converter/core/routing/AppRouter.dart';
 import 'package:currency_converter/core/util/constants.dart';
 import 'package:currency_converter/features/converter/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/converter/presentation/pages/currency_conversion_page.dart';
+import 'package:currency_converter/features/historical_data/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/historical_data/presentation/pages/latest_page.dart';
 import 'package:currency_converter/features/home/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/home/presentation/pages/home_page.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => di.inj<SupportedCurrenciesBloc>()),
         BlocProvider(create: (_) => di.inj<CurrencyConversionBloc>()),
+        BlocProvider(create: (_) => di.inj<LatestConversionsBloc>()),
       ],
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.green),
