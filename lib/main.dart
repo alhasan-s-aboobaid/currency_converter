@@ -1,6 +1,8 @@
+import 'package:currency_converter/core/routing/AppRouter.dart';
 import 'package:currency_converter/core/util/constants.dart';
 import 'package:currency_converter/features/converter/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/converter/presentation/pages/currency_conversion_page.dart';
+import 'package:currency_converter/features/historical_data/presentation/pages/latest_page.dart';
 import 'package:currency_converter/features/home/presentation/bloc/bloc.dart';
 import 'package:currency_converter/features/home/presentation/pages/home_page.dart';
 import 'package:currency_converter/features/home/presentation/widgets/app_bar.dart';
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(primarySwatch: Colors.green),
         home: MainPage(),
+        onGenerateRoute: AppRouter.generateRoutes,
       ),
     );
   }
@@ -43,7 +46,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(title: "Home"),
       body: Container(
         padding: kPagePadding,
         child: Column(
@@ -52,7 +55,7 @@ class _MainPageState extends State<MainPage> {
             GestureDetector(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                  return HomePage();
+                  return SupportedCurrenciesPage();
                 },));
               },
               child: Container(
@@ -66,7 +69,7 @@ class _MainPageState extends State<MainPage> {
                 child: Center(child: Text("Supported Currencies", style: Theme.of(context).textTheme.headline5,)),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             GestureDetector(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {

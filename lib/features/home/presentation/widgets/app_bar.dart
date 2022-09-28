@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
 
-AppBar appBar () {
+AppBar appBar ({required String title}) {
+
   return AppBar(
-    title: Text("Currency Converter",),
+    title: Text(title),
   );
 }

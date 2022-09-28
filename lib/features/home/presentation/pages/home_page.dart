@@ -6,14 +6,14 @@ import 'package:currency_converter/features/home/presentation/widgets/main_conte
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class SupportedCurrenciesPage extends StatefulWidget {
+  const SupportedCurrenciesPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SupportedCurrenciesPage> createState() => _SupportedCurrenciesPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SupportedCurrenciesPageState extends State<SupportedCurrenciesPage> {
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(title: "Supported currencies"),
       body: Container(
         padding: kPagePadding,
         child: BlocBuilder<SupportedCurrenciesBloc, SupportedCurrenciesState>(

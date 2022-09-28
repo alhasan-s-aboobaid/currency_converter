@@ -41,7 +41,6 @@ dependencies:
   get_it: ^7.2.0
   sembast: ^3.3.0
   path_provider:
-
   flutter_svg: ^1.0.3
   internet_connection_checker: ^0.0.1+4
   http: ^0.13.5
@@ -51,7 +50,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mockito:
+  build_runner: ^2.2.0 # For generating code (Mocks, etc)
+  mockito: ^5.2.0
 
 
 flutter:
