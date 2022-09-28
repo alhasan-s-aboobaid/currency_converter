@@ -29,13 +29,13 @@ Future<void> main() async{
     });
   });
 
-  void setUpMockHttpClientSuccess200() {
+  void mockHttpClientSuccess200() {
     when(mockClient.get(Uri.parse(""), headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(readJson('supported_currencies.json'), 200));
   }
   
   test("test http get request", () async {
-    setUpMockHttpClientSuccess200();
+    mockHttpClientSuccess200();
   });
 
 
@@ -44,11 +44,10 @@ Future<void> main() async{
     SupportedCurrencyModel.fromJson(json.decode(readJson('supported_currencies.json')));
 
     test(
-      '''should perform a GET request on a URL with number
-       being the endpoint and with application/json header''',
+      '''should perform a GET request on a URL''',
           () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        mockHttpClientSuccess200();
         // act
         when(remoteDataSourceImpl.getSupportedCurrencies()).thenAnswer((_) async{
           return SupportedCurrencyModel(supportedCodes: []);
@@ -64,10 +63,10 @@ Future<void> main() async{
     );
 
     test(
-      'should return supported when the response code is 200 (success)',
+      'should return supported when the response code is 200',
           () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        mockHttpClientSuccess200();
         // act
         final result = await remoteDataSourceImpl.getSupportedCurrencies();
         // assert
