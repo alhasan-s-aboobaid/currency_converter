@@ -19,7 +19,7 @@ class LatestCurrencyConversionsLocalDataSourceImpl implements LatestCurrencyConv
     if(latest!=null) {
       print("get latest data from local");
 
-      return Future.value(latest);
+      return Future.value(LatestDataModel.fromJson(latest as Map<String, dynamic>));
     } else {
       throw CacheException();
     }

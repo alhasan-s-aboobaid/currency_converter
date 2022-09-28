@@ -38,12 +38,10 @@ class CurrencyDao {
   }
 
   Future getLatestData(LatestDataModel data) async {
-    final recordSnapshot = await _currencyStore.find(await _db, finder: Finder(
-      filter: Filter.byKey(data.baseCode),
-    ));
+    final recordSnapshot = await _latestStore.find(await _db);
     return recordSnapshot.map((snapshot) {
-      final data = LatestDataModel.fromJson(snapshot.value);
-      return data;
-    }).toList();
+      print(snapshot.value);
+      return snapshot.value;
+    }).toList()[0];
   }
 }
