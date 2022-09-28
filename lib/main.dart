@@ -54,6 +54,10 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            FlutterLogo(size: 100, style: FlutterLogoStyle.stacked),
+            const SizedBox(height: 28),
+            Text("Welcome to our app", style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.red)),
+            const SizedBox(height: 28),
             GestureDetector(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
@@ -68,7 +72,7 @@ class _MainPageState extends State<MainPage> {
                   borderRadius: BorderRadius.all(Radius.circular(8))
                 ),
 
-                child: Center(child: Text("Supported Currencies", style: Theme.of(context).textTheme.headline5,)),
+                child: Center(child: Text("Supported Currencies", style: Theme.of(context).textTheme.headline5!.copyWith(color: Colors.white),)),
               ),
             ),
             const SizedBox(height: 12),
@@ -86,7 +90,7 @@ class _MainPageState extends State<MainPage> {
                   borderRadius: BorderRadius.all(Radius.circular(8))
                 ),
 
-                child: Center(child: Text("Currencies Conversion", style: Theme.of(context).textTheme.headline5,)),
+                child: Center(child: Text("Currencies Conversion", style: Theme.of(context).textTheme.headline5!.copyWith(color: Colors.white),)),
               ),
             ),
           ],
