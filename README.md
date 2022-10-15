@@ -1,4 +1,4 @@
-# 📖 currency converter
+# 📖 currency converter with TDD
 
 ## How to build the project
   git clone https://github.com/alhasan-s-aboobaid/currency_converter.git
@@ -16,7 +16,3 @@
   
 ## Used database
   I have used NoSql technique with the help of this library https://pub.dev/packages/sembast , I used this type as the app is not too big and it is faster to prepear 
-
-## Note
-After I have implemented getting supported currencies requests using exchangerate-api.com , I was surprised that historical data needs to upgrade my plan.
-but it provides /latest which returns last conversion rates for a specific currency. so I apply it instead :) 
